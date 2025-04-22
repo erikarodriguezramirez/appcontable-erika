@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App Contable Erika</title>
+</head>
+<body>
+    <h1>Generador de Asientos Contables</h1>
+    <form method="POST">
+        <label for="tipo">Tipo de asiento:</label>
+        <select name="tipo" required>
+            {% for t in tipos %}
+                <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="importe">Importe total (€):</label>
+        <input type="number" name="importe" step="0.01" required><br><br>
+
+        <label for="observaciones">Observaciones:</label><br>
+        <textarea name="observaciones" rows="4" cols="50"></textarea><br><br>
+
+        <button type="submit" name="accion" value="Mostrar">Mostrar Asiento</button>
+        <button type="submit" name="accion" value="PDF">Descargar PDF</button>
+        <button type="submit" name="accion" value="Excel">Descargar Excel</button>
+    </form>
+
+    {% if asiento %}
+        <h2>Asiento generado ({{ tipo }})</h2>
+        <ul>
+            {% for cuenta, debehaber, importe in asiento %}
+                <li>{{ debehaber }} | {{ cuenta }} | {{ importe }} €</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Observaciones:</strong> {{ observaciones }}</p>
+    {% endif %}
+</body>
+</html>
